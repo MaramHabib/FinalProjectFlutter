@@ -1,9 +1,7 @@
-import 'dart:js';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import '../Utilities/dialog_box.dart';
 import '../Utilities/edit_dialog_box.dart';
 import '../data/database.dart';
 import '../model/user.dart';
@@ -49,7 +47,7 @@ class ViewModel extends ChangeNotifier{
 
   int getLengthComplete(){
 
-    List<Task> complete=tasks.where((t) => t.complete == true ).toList();
+    List<dynamic> complete=db.tasks.where((t) => t.complete == true ).toList();
     return complete.length;
   }
 
