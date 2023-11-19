@@ -57,7 +57,7 @@ class TaskList extends StatelessWidget {
                             color:Colors.green,
                             //borderRadius:BorderRadius.horizontal(right: Radius.circular(12))
                           ),
-                          child:IconButton(onPressed:(){},
+                          child:IconButton(onPressed:()=>viewModel.editTask(index, context),
                               icon:const Icon(Icons.edit)),),
 
                         Container(

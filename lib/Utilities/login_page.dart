@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo_app/home_page.dart';
 
 class Login extends StatefulWidget {
+
+
   const Login({super.key});
 
   @override
@@ -72,8 +74,8 @@ class _LoginState extends State<Login> {
                       if (_formKey.currentState!.validate()) {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const HomePage()),
-                        );
+                          MaterialPageRoute(builder: (context) => HomePage(data:emailController.text),
+                        ));
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Please fill input')),

@@ -9,8 +9,11 @@ import 'package:provider/provider.dart';
 
 import 'Utilities/login_page.dart';
 
-void main(){
+void main() async{
   //initiate hive
+  await Hive.initFlutter();
+  //open Box
+  var box=await Hive.openBox('myBox');
   runApp(
       ChangeNotifierProvider(create: (context)=>ViewModel(),
       child: const MyApp(),)

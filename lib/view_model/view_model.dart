@@ -1,6 +1,11 @@
+import 'dart:js';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import '../Utilities/dialog_box.dart';
+import '../Utilities/edit_dialog_box.dart';
+import '../data/database.dart';
 import '../model/user.dart';
 import '../model/task.dart';
 
@@ -8,27 +13,38 @@ class ViewModel extends ChangeNotifier{
   User user=User('Maram Ashraf Tawfik');
 
   List<Task> tasks = <Task>[];
- // final _myBox=Hive.box('myBox');
+  final myBox = Hive.box('mybox');
+  ToDoDataBase db = ToDoDataBase();
+
+  void createInitialData() {
+    tasks = [
+      Task( 'Studying Flutter', false),
+      Task( 'Cleaning Home', false),
+      Task( 'Make Lunch', false),
+
+
+    ];
+  }
 
   void addTask(Task newTask){
-    tasks.add(newTask);
+    db.tasks.add(newTask);
     notifyListeners();
 
   }
 
   String getListOfTask(int index){
 
-    return tasks[index].title ;
+    return db.tasks[index].title ;
   }
 
   bool getValueOfTask(int index){
 
-    return tasks[index].complete;
+    return db.tasks[index].complete;
   }
 
   int getLengthTask(){
 
-    return tasks.length;
+    return db.tasks.length;
   }
 
   int getLengthComplete(){
@@ -58,17 +74,44 @@ class ViewModel extends ChangeNotifier{
 
   void setTaskValue ( int taskIndex , bool taskValue  ){
 
-    tasks[taskIndex].complete = taskValue;
+    db.tasks[taskIndex].complete = taskValue;
 
     notifyListeners();
   }
 
   String getTitleOfTask(int index){
 
-    return tasks[index].title ;
+    return db.tasks[index].title ;
   }
 
-  void deleteTask( int taskIndex){
+  void editTask(int index,context){
+   // TextEditingController controller =
+    // x=TextEditingController(text: tasks[index].title);
+    dynamic x=db.tasks[index].title;
+
+
+    showDialog(
+        context: context,
+        builder: (context){
+          return EditDialogBox(index,x);
+        });
+    notifyListeners();
+   // tasks[index].title = newTask.text;
+    //Navigator.of(context).pop;
+  }
+
+  void saveEditTask(int index,TextEditingController newTask){
+
+
+      db.tasks[index].title= newTask.text;
+      notifyListeners();
+
+    }
+
+
+
+
+    void deleteTask( int taskIndex){
 
     tasks.removeAt(taskIndex);
     notifyListeners();

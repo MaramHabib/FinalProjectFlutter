@@ -3,23 +3,21 @@ import 'package:flutter_todo_app/Utilities/my_button.dart';
 import 'package:flutter_todo_app/view_model/view_model.dart';
 import 'package:provider/provider.dart';
 import '../model/task.dart';
+import '../model/task.dart';
 
-class MyDialogBox extends StatelessWidget {
+class EditDialogBox extends StatelessWidget {
 
   var textUser =TextEditingController();
-  var newTask=TextEditingController();
-  var taskTitle;
+  var updateTask=TextEditingController();
+  String editTask;
+  int index;
 
- MyDialogBox( { this.taskTitle,super.key});
+  EditDialogBox(this.index,this.editTask, { super.key});
 
 
   @override
   Widget build(BuildContext context) {
 
-    if (taskTitle != null){
-      newTask==taskTitle;
-      print(taskTitle);
-    }
 
     return   Consumer<ViewModel>(builder: (context , viewmodel ,child  ){
       return AlertDialog(
@@ -33,10 +31,10 @@ class MyDialogBox extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   TextField(
-                    controller: textUser,
-                    decoration: const InputDecoration(
-                      border:OutlineInputBorder(),
-                      hintText: "Add a New Task",
+                    controller: updateTask,
+                    decoration: InputDecoration(
+                      border:const OutlineInputBorder(),
+                      hintText:editTask,
 
                     ),
                   ),
@@ -46,11 +44,11 @@ class MyDialogBox extends StatelessWidget {
                       MyButton(text: "save",
 
                         onPressed: (){
-                            Task x = Task(textUser.text, false);
-                            viewmodel.addTask(x );
-                            //print(textUser.text);
-                            textUser.clear();
-                            Navigator.of(context).pop();
+                          viewmodel.saveEditTask(index,updateTask );
+                          //tasks[index].title= newTask.text;
+                          //print(textUser.text);
+                          textUser.clear();
+                          Navigator.of(context).pop();
 
 
                         },

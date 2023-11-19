@@ -6,11 +6,13 @@ import 'package:flutter_todo_app/Utilities/todo_list.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import '../view_model/view_model.dart';
-import '../model/task.dart';
 import 'Utilities/profile.dart';
+import 'data/database.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+
+  dynamic data;
+  HomePage({this.data,super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -21,6 +23,9 @@ class _HomePageState extends State<HomePage> {
   final _newTask=TextEditingController();
 
   //open a box
+
+  final _myBox = Hive.box('mybox');
+  ToDoDataBase db = ToDoDataBase();
 
 
   List toDoList=[
@@ -92,6 +97,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+
+  void initState() {
+    // if this is the 1st time ever openin the app, then create default data
+    if (_myBox.get("TODOLIST") == null) {
+      db.createInitialData();
+      print("He");
+      print(_myBox.get("ToDoList"));
+    } else {
+      // there already exists data
+      db.loadData();
+    }
+
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
   return
     Consumer<ViewModel>(builder:(
@@ -123,11 +143,8 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                       flex: 1,
-                      child: Text("Hello")),
-                  Expanded(
-                      flex: 1,
-                      child:Text("Hello") ),
-
+                      child: Text("Hello ${widget.data}",style:TextStyle(color:Colors.white,fontSize: 20,),),
+                      ),
                   Expanded(
                       flex: 5,
                       child: TaskList() ),
