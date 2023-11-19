@@ -143,9 +143,9 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                       flex: 1,
-                      child: Text("Hello ${widget.data}",style:TextStyle(color:Colors.white,fontSize: 20,),),
+                      child: Text("Hello ${widget.data}",style:const TextStyle(color:Colors.white,fontSize: 20,),),
                       ),
-                  Expanded(
+                  const Expanded(
                       flex: 5,
                       child: TaskList() ),
                 ],

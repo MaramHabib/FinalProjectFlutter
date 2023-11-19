@@ -113,7 +113,7 @@ class ViewModel extends ChangeNotifier{
 
     void deleteTask( int taskIndex){
 
-    tasks.removeAt(taskIndex);
+    db.tasks.removeAt(taskIndex);
     notifyListeners();
   }
 }
